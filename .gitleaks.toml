@@ -1,0 +1,15 @@
+# Secrets gate for the hardened code. The baseline's planted secrets live in vulnerable/ (scanned
+# separately and reported as "before" findings), and outputs/ holds scanner reports that quote them.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Intentional findings outside the hardened service"
+paths = [
+  '''^vulnerable/''',
+  '''^outputs/''',
+  '''^\.venv''',
+  '''^\.git/''',
+  '''^\.dev-keys$''',
+  '''^\.env$''',
+]

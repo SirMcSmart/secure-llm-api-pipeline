@@ -1,0 +1,4 @@
+# Scanners that run from Python (the rest run from pinned Docker images, see scripts/scan.sh).
+bandit[sarif]==1.9.4
+pip-audit==2.10.1
+checkov==3.4.11

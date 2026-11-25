@@ -1,0 +1,12 @@
+{
+  "_comment": "Synthetic demo corpus. Every confidential document carries a unique marker string (e.g. ALICE-CONFIDENTIAL-4821) so leaks can be detected exactly in tests and in the red-team evaluation.",
+  "users": ["alice", "bob", "mallory"],
+  "documents": [
+    {"id": "handbook", "owner": "alice", "shared_with": ["bob", "mallory"], "title": "Employee handbook", "file": "handbook.md"},
+    {"id": "alice-salary-review", "owner": "alice", "shared_with": [], "title": "2026 salary review (HR confidential)", "file": "alice-salary-review.md"},
+    {"id": "bob-incident-postmortem", "owner": "bob", "shared_with": [], "title": "INC-2291 postmortem (engineering confidential)", "file": "bob-incident-postmortem.md"},
+    {"id": "bob-vpn-guide", "owner": "bob", "shared_with": ["alice"], "title": "VPN setup guide", "file": "bob-vpn-guide.md"},
+    {"id": "mallory-vendor-notes", "owner": "mallory", "shared_with": ["alice", "bob"], "title": "Vendor onboarding notes", "file": "mallory-vendor-notes.md"},
+    {"id": "mallory-timesheet", "owner": "mallory", "shared_with": [], "title": "Contractor timesheet", "file": "mallory-timesheet.md"}
+  ]
+}

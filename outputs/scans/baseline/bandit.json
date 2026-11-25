@@ -1,0 +1,234 @@
+{
+  "errors": [],
+  "generated_at": "2026-11-25T17:12:56Z",
+  "metrics": {
+    "_totals": {
+      "CONFIDENCE.HIGH": 6,
+      "CONFIDENCE.LOW": 1,
+      "CONFIDENCE.MEDIUM": 3,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 5,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 3,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 107,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "vulnerable/app.py": {
+      "CONFIDENCE.HIGH": 6,
+      "CONFIDENCE.LOW": 1,
+      "CONFIDENCE.MEDIUM": 3,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 5,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 3,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 107,
+      "nosec": 0,
+      "skipped_tests": 0
+    }
+  },
+  "results": [
+    {
+      "code": "27 # VULN-03 (CWE-798): hard-coded credentials committed to source control.\n28 JWT_SIGNING_SECRET = \"q7Rk2LmZ9vXwT4pN8sYb3HcJ6dFgA1eU\"\n29 ADMIN_API_TOKEN = \"dqadmin_Zx81KpQ4rT7mWv2NcL9sHy3BfG6jDe0A\"\n",
+      "col_offset": 21,
+      "end_col_offset": 55,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'q7Rk2LmZ9vXwT4pN8sYb3HcJ6dFgA1eU'",
+      "line_number": 28,
+      "line_range": [
+        28
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+      "test_id": "B105",
+      "test_name": "hardcoded_password_string"
+    },
+    {
+      "code": "28 JWT_SIGNING_SECRET = \"q7Rk2LmZ9vXwT4pN8sYb3HcJ6dFgA1eU\"\n29 ADMIN_API_TOKEN = \"dqadmin_Zx81KpQ4rT7mWv2NcL9sHy3BfG6jDe0A\"\n30 \n",
+      "col_offset": 18,
+      "end_col_offset": 60,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'dqadmin_Zx81KpQ4rT7mWv2NcL9sHy3BfG6jDe0A'",
+      "line_number": 29,
+      "line_range": [
+        29
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+      "test_id": "B105",
+      "test_name": "hardcoded_password_string"
+    },
+    {
+      "code": "32 API_KEYS = {\n33     hashlib.md5(b\"alice123\").hexdigest(): \"alice\",\n34     hashlib.md5(b\"bob123\").hexdigest(): \"bob\",\n",
+      "col_offset": 4,
+      "end_col_offset": 28,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 327,
+        "link": "https://cwe.mitre.org/data/definitions/327.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "Use of weak MD5 hash for security. Consider usedforsecurity=False",
+      "line_number": 33,
+      "line_range": [
+        33
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html",
+      "test_id": "B324",
+      "test_name": "hashlib"
+    },
+    {
+      "code": "33     hashlib.md5(b\"alice123\").hexdigest(): \"alice\",\n34     hashlib.md5(b\"bob123\").hexdigest(): \"bob\",\n35     hashlib.md5(b\"mallory123\").hexdigest(): \"mallory\",\n",
+      "col_offset": 4,
+      "end_col_offset": 26,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 327,
+        "link": "https://cwe.mitre.org/data/definitions/327.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "Use of weak MD5 hash for security. Consider usedforsecurity=False",
+      "line_number": 34,
+      "line_range": [
+        34
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html",
+      "test_id": "B324",
+      "test_name": "hashlib"
+    },
+    {
+      "code": "34     hashlib.md5(b\"bob123\").hexdigest(): \"bob\",\n35     hashlib.md5(b\"mallory123\").hexdigest(): \"mallory\",\n36 }\n",
+      "col_offset": 4,
+      "end_col_offset": 30,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 327,
+        "link": "https://cwe.mitre.org/data/definitions/327.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "Use of weak MD5 hash for security. Consider usedforsecurity=False",
+      "line_number": 35,
+      "line_range": [
+        35
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html",
+      "test_id": "B324",
+      "test_name": "hashlib"
+    },
+    {
+      "code": "67     key = (authorization or \"\").replace(\"Bearer \", \"\") or api_key or \"\"  # VULN: key accepted in the URL\n68     user = API_KEYS.get(hashlib.md5(key.encode()).hexdigest())\n69     if not user:\n",
+      "col_offset": 24,
+      "end_col_offset": 49,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 327,
+        "link": "https://cwe.mitre.org/data/definitions/327.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "Use of weak MD5 hash for security. Consider usedforsecurity=False",
+      "line_number": 68,
+      "line_range": [
+        68
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html",
+      "test_id": "B324",
+      "test_name": "hashlib"
+    },
+    {
+      "code": "107     # VULN-01 (CWE-89): SQL built with string formatting.\n108     sql = \"SELECT id, title, owner FROM documents WHERE owner = '%s' AND title LIKE '%%%s%%'\" % (user, q)\n109     rows = db.execute(sql).fetchall()\n",
+      "col_offset": 10,
+      "end_col_offset": 93,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 89,
+        "link": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible SQL injection vector through string-based query construction.",
+      "line_number": 108,
+      "line_range": [
+        108
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html",
+      "test_id": "B608",
+      "test_name": "hardcoded_sql_expressions"
+    },
+    {
+      "code": "123         # VULN-07 (CWE-95, OWASP LLM05/LLM06): model output executed as Python.\n124         raw = \"The result is %s.\" % eval(raw[len(\"TOOL:calc(\") : -1])\n125     return raw\n",
+      "col_offset": 36,
+      "end_col_offset": 69,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Use of possibly insecure function - consider using safer ast.literal_eval.",
+      "line_number": 124,
+      "line_range": [
+        124
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b307-eval",
+      "test_id": "B307",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "135 # VULN-08 (CWE-79, OWASP LLM05): model output rendered as HTML with autoescaping off.\n136 _env = Environment(autoescape=False)\n137 _PAGE = _env.from_string(\"<html><body><h1>DocQA</h1><p>Q: {{ q }}</p><div>{{ answer }}</div></body></html>\")\n",
+      "col_offset": 7,
+      "end_col_offset": 36,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 94,
+        "link": "https://cwe.mitre.org/data/definitions/94.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "Using jinja2 templates with autoescape=False is dangerous and can lead to XSS. Use autoescape=True or use the select_autoescape function to mitigate XSS vulnerabilities.",
+      "line_number": 136,
+      "line_range": [
+        136
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b701_jinja2_autoescape_false.html",
+      "test_id": "B701",
+      "test_name": "jinja2_autoescape_false"
+    },
+    {
+      "code": "155 \n156     uvicorn.run(app, host=\"0.0.0.0\", port=8000)  # VULN-12 (CWE-1327): binds all interfaces\n",
+      "col_offset": 26,
+      "end_col_offset": 35,
+      "filename": "vulnerable/app.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 605,
+        "link": "https://cwe.mitre.org/data/definitions/605.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible binding to all interfaces.",
+      "line_number": 156,
+      "line_range": [
+        156
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html",
+      "test_id": "B104",
+      "test_name": "hardcoded_bind_all_interfaces"
+    }
+  ]
+}

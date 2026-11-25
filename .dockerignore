@@ -1,0 +1,16 @@
+.git
+.github
+.venv
+.venv-tools
+.env
+outputs
+tests
+vulnerable
+infra
+docs
+scripts
+**/__pycache__
+**/*.pyc
+*.egg-info
+.pytest_cache
+.DS_Store

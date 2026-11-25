@@ -1,0 +1,5 @@
+# install the hash-locked runtime deps first: pip install --require-hashes -r requirements.txt
+httpx2==2.16.2
+pytest==9.2.0
+# only needed to import vulnerable/app.py in the baseline exploit tests
+jinja2==3.1.6

@@ -1,0 +1,167 @@
+# Secure SDLC pipeline. Every third-party action is pinned to a full commit SHA.
+# The "hardened" jobs are the gate: they fail the build on high-severity findings.
+# The "baseline" job runs the same scanners against vulnerable/ for the before/after comparison
+# and never blocks.
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1" # weekly: new CVEs appear without code changes
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Unit, authz and prompt-injection tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m venv .venv
+          .venv/bin/pip install --require-hashes -r requirements.txt
+          .venv/bin/pip install -r requirements-dev.txt
+      - name: pytest
+        run: mkdir -p outputs/tests && .venv/bin/python -m pytest -q --junitxml=outputs/tests/junit.xml
+      - name: LLM red team gate (0 successful attacks allowed)
+        run: .venv/bin/python scripts/redteam_eval.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: tests-and-redteam
+          path: outputs/
+
+  codeql:
+    name: CodeQL (SAST)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@e274593ecfcbcdc39c8f034978d84614cebcb71d # v4.39.5
+        with:
+          languages: python
+          config-file: ./.github/codeql/codeql-config.yml
+      - uses: github/codeql-action/analyze@e274593ecfcbcdc39c8f034978d84614cebcb71d # v4.39.5
+        with:
+          output: codeql-results
+      - name: Fail on high or critical
+        run: python3 scripts/sarif_gate.py codeql-results/*.sarif --min 7.0
+
+  iac:
+    name: Terraform fmt + validate (no apply, no credentials)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false -input=false
+      - run: terraform validate
+
+  security-gate:
+    name: SAST, SCA, secrets, IaC, container, DAST (hardened)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # gitleaks scans the full history below
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.11"
+      - name: Install app and Python scanners
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --require-hashes -r requirements.txt
+          .venv/bin/pip install -r requirements-dev.txt
+          python -m venv .venv-tools
+          .venv-tools/bin/pip install -r requirements-tools.txt
+      - name: Build image
+        run: docker build -t docqa:scan .
+      - name: Static scans (Semgrep, Bandit, pip-audit, Trivy, gitleaks, Checkov, hadolint)
+        run: scripts/scan.sh hardened
+      - name: Secrets in full git history
+        run: >
+          docker run --rm -v "$PWD":/repo -w /repo
+          zricethezav/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+          git . --config .gitleaks.toml --redact --no-banner
+      - name: DAST (OWASP ZAP baseline + authenticated API scan)
+        run: scripts/dast.sh hardened
+      - name: Red team results for the summary
+        run: .venv/bin/python scripts/redteam_eval.py
+      - name: Gate
+        run: .venv/bin/python scripts/summarize_scans.py
+      - name: Upload SARIF (Semgrep)
+        if: always()
+        uses: github/codeql-action/upload-sarif@e274593ecfcbcdc39c8f034978d84614cebcb71d # v4.39.5
+        with:
+          sarif_file: outputs/scans/hardened/semgrep.sarif
+          category: semgrep
+      - name: Upload SARIF (Bandit)
+        if: always()
+        uses: github/codeql-action/upload-sarif@e274593ecfcbcdc39c8f034978d84614cebcb71d # v4.39.5
+        with:
+          sarif_file: outputs/scans/hardened/bandit.sarif
+          category: bandit
+      - name: Upload SARIF (Trivy image)
+        if: always()
+        uses: github/codeql-action/upload-sarif@e274593ecfcbcdc39c8f034978d84614cebcb71d # v4.39.5
+        with:
+          sarif_file: outputs/scans/hardened/trivy-image.sarif
+          category: trivy
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: hardened-scan-reports
+          path: |
+            outputs/
+            !outputs/**/*.sarif
+
+  baseline:
+    name: Same scanners against vulnerable/ (report only)
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m venv .venv
+          .venv/bin/pip install --require-hashes -r requirements.txt
+          .venv/bin/pip install -r requirements-dev.txt
+          python -m venv .venv-tools
+          .venv-tools/bin/pip install -r requirements-tools.txt
+      - run: docker build -f vulnerable/Dockerfile -t docqa-vulnerable:scan .
+      - run: scripts/scan.sh baseline
+      - run: scripts/dast.sh baseline
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: baseline-scan-reports
+          path: outputs/scans/baseline/

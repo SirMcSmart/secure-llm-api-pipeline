@@ -1,0 +1,22 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 28,
+  "EndLine": 28,
+  "StartColumn": 2,
+  "EndColumn": 56,
+  "Match": "JWT_SIGNING_SECRET = \"REDACTED\"",
+  "Secret": "REDACTED",
+  "File": "vulnerable/app.py",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 5,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "vulnerable/app.py:generic-api-key:28"
+ }
+]

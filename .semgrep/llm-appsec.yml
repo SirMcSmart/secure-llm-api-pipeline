@@ -1,0 +1,85 @@
+# Project-specific rules for LLM application risks that generic rule packs do not cover.
+rules:
+  - id: llm-output-to-code-execution
+    message: >-
+      Model output reaches eval/exec/compile/os.system. An attacker who can influence the prompt
+      (directly or through a retrieved document) can run code. Parse model output as data instead.
+    severity: ERROR
+    languages: [python]
+    metadata:
+      cwe: "CWE-95: Eval Injection"
+      owasp-llm: "LLM05 Improper Output Handling, LLM06 Excessive Agency"
+      atlas: AML.T0050
+      category: security
+    # Pattern-based rather than taint mode: Semgrep taint tracking does not follow string slices
+    # (raw[a:b]), which is exactly how tool-call arguments are usually cut out of model output.
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $RAW = $LLM.complete(...)
+              ...
+          - pattern-inside: |
+              $RAW = $CLIENT.messages.create(...)
+              ...
+      - pattern-either:
+          - pattern: eval(<... $RAW ...>)
+          - pattern: exec(<... $RAW ...>)
+          - pattern: compile(<... $RAW ...>, ...)
+          - pattern: os.system(<... $RAW ...>)
+          - pattern: subprocess.$F(<... $RAW ...>, ...)
+
+  - id: secret-in-llm-prompt
+    message: >-
+      A secret-looking value is formatted into an LLM prompt. Anything in the prompt can be
+      extracted by prompt injection (system prompt leakage). Keep secrets out of prompts.
+    severity: ERROR
+    languages: [python]
+    metadata:
+      cwe: "CWE-200: Exposure of Sensitive Information"
+      owasp-llm: "LLM07 System Prompt Leakage"
+      atlas: AML.T0056
+      category: security
+    patterns:
+      - pattern: $PROMPT.format(..., $KW=$VALUE, ...)
+      - metavariable-regex:
+          metavariable: $PROMPT
+          regex: (?i).*prompt.*
+      - metavariable-regex:
+          metavariable: $VALUE
+          regex: (?i).*(token|secret|password|passwd|api_?key|credential).*
+
+  - id: authorization-delegated-to-prompt
+    message: >-
+      Access-control rules are written into the prompt. The model cannot enforce authorization:
+      filter documents by the caller's permissions before retrieval instead.
+    severity: ERROR
+    languages: [python]
+    metadata:
+      cwe: "CWE-285: Improper Authorization"
+      owasp-llm: "LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM08 Vector and Embedding Weaknesses"
+      category: security
+    patterns:
+      - pattern: |
+          $PROMPT = "..."
+      - metavariable-regex:
+          metavariable: $PROMPT
+          regex: (?i).*prompt.*
+      - metavariable-pattern:
+          metavariable: $PROMPT
+          pattern-regex: .*
+      - pattern-regex: (?is)(only|never)\s+(answer|respond|use|reveal).{0,80}(user|may read|allowed|permission)
+
+  - id: unbounded-llm-output
+    message: >-
+      max_tokens is not a small constant or setting. Unbounded generation is a cost and
+      denial-of-service risk. Cap output tokens per request.
+    severity: WARNING
+    languages: [python]
+    metadata:
+      owasp-llm: "LLM10 Unbounded Consumption"
+      category: security
+    patterns:
+      - pattern: $LLM.complete($S, $U, $N)
+      - metavariable-comparison:
+          metavariable: $N
+          comparison: $N > 4096

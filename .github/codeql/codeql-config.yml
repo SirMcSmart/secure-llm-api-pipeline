@@ -1,0 +1,5 @@
+name: docqa
+queries:
+  - uses: security-extended
+paths:
+  - src

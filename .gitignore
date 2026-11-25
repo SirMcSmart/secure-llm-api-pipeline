@@ -1,0 +1,16 @@
+.venv/
+.venv-tools/
+.env
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl.bak
+outputs/**/*.log
+outputs/zap/*.html
+.DS_Store
+.dev-keys
+outputs/**/*.sarif

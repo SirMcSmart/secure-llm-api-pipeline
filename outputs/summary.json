@@ -1,0 +1,261 @@
+{
+  "baseline": {
+    "semgrep": {
+      "error": 5,
+      "warning": 8,
+      "info": 0,
+      "total": 13
+    },
+    "bandit": {
+      "high": 5,
+      "medium": 3,
+      "low": 2,
+      "total": 10
+    },
+    "pip_audit": {
+      "vulnerable_packages": 4,
+      "vulnerabilities": 29
+    },
+    "trivy_image": {
+      "critical": 2,
+      "high": 48,
+      "medium": 67,
+      "low": 32,
+      "unknown": 3,
+      "total": 152,
+      "high_critical_fixable": 22,
+      "os": "debian 10.13"
+    },
+    "gitleaks": {
+      "findings": 1
+    },
+    "checkov_terraform": {
+      "passed": 16,
+      "failed": 28,
+      "skipped": 0
+    },
+    "checkov_dockerfile": {
+      "passed": 28,
+      "failed": 2,
+      "skipped": 0
+    },
+    "checkov_github_actions": null,
+    "hadolint": {
+      "error": 0,
+      "warning": 1,
+      "info": 0
+    },
+    "terraform_validate": {
+      "valid": true,
+      "errors": 0,
+      "warnings": 0
+    },
+    "zap_baseline": null,
+    "zap_api": null
+  },
+  "hardened": {
+    "semgrep": {
+      "error": 0,
+      "warning": 0,
+      "info": 0,
+      "total": 0
+    },
+    "bandit": {
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "total": 0
+    },
+    "pip_audit": {
+      "vulnerable_packages": 0,
+      "vulnerabilities": 0
+    },
+    "trivy_image": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "unknown": 0,
+      "total": 0,
+      "high_critical_fixable": 0,
+      "os": "wolfi 20230201"
+    },
+    "gitleaks": {
+      "findings": 0
+    },
+    "checkov_terraform": {
+      "passed": 188,
+      "failed": 0,
+      "skipped": 9
+    },
+    "checkov_dockerfile": {
+      "passed": 36,
+      "failed": 0,
+      "skipped": 0
+    },
+    "checkov_github_actions": {
+      "passed": 164,
+      "failed": 0,
+      "skipped": 0
+    },
+    "hadolint": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "terraform_validate": {
+      "valid": true,
+      "errors": 0,
+      "warnings": 0
+    },
+    "zap_baseline": null,
+    "zap_api": null
+  },
+  "redteam": {
+    "vulnerable": {
+      "attacks": 23,
+      "successful": 23,
+      "by_category": {
+        "delimiter_forgery": {
+          "successful": 1,
+          "attacks": 1
+        },
+        "direct_injection": {
+          "successful": 6,
+          "attacks": 6
+        },
+        "indirect_injection": {
+          "successful": 2,
+          "attacks": 2
+        },
+        "jailbreak": {
+          "successful": 1,
+          "attacks": 1
+        },
+        "markdown_exfiltration": {
+          "successful": 1,
+          "attacks": 1
+        },
+        "output_xss": {
+          "successful": 3,
+          "attacks": 3
+        },
+        "request_flood": {
+          "successful": 1,
+          "attacks": 1
+        },
+        "system_prompt_extraction": {
+          "successful": 4,
+          "attacks": 4
+        },
+        "tool_code_execution": {
+          "successful": 3,
+          "attacks": 3
+        },
+        "unbounded_input": {
+          "successful": 1,
+          "attacks": 1
+        }
+      }
+    },
+    "hardened-no-filters": {
+      "attacks": 23,
+      "successful": 0,
+      "by_category": {
+        "delimiter_forgery": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "direct_injection": {
+          "successful": 0,
+          "attacks": 6
+        },
+        "indirect_injection": {
+          "successful": 0,
+          "attacks": 2
+        },
+        "jailbreak": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "markdown_exfiltration": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "output_xss": {
+          "successful": 0,
+          "attacks": 3
+        },
+        "request_flood": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "system_prompt_extraction": {
+          "successful": 0,
+          "attacks": 4
+        },
+        "tool_code_execution": {
+          "successful": 0,
+          "attacks": 3
+        },
+        "unbounded_input": {
+          "successful": 0,
+          "attacks": 1
+        }
+      }
+    },
+    "hardened": {
+      "attacks": 23,
+      "successful": 0,
+      "by_category": {
+        "delimiter_forgery": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "direct_injection": {
+          "successful": 0,
+          "attacks": 6
+        },
+        "indirect_injection": {
+          "successful": 0,
+          "attacks": 2
+        },
+        "jailbreak": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "markdown_exfiltration": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "output_xss": {
+          "successful": 0,
+          "attacks": 3
+        },
+        "request_flood": {
+          "successful": 0,
+          "attacks": 1
+        },
+        "system_prompt_extraction": {
+          "successful": 0,
+          "attacks": 4
+        },
+        "tool_code_execution": {
+          "successful": 0,
+          "attacks": 3
+        },
+        "unbounded_input": {
+          "successful": 0,
+          "attacks": 1
+        }
+      }
+    }
+  },
+  "gate": {
+    "passed": false,
+    "failures": [
+      "missing report: zap_api",
+      "missing report: zap_baseline"
+    ]
+  }
+}
