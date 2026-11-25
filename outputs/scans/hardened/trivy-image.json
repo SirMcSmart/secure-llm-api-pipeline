@@ -3,18 +3,18 @@
   "Trivy": {
     "Version": "0.76.2"
   },
-  "ReportID": "01a213bf-5a51-7b15-b1e1-601108f0dfee",
-  "CreatedAt": "2026-11-25T17:27:17.329729272Z",
-  "ArtifactID": "sha256:087bb3212379df6b4423fd6258e553aa296ba3df5d0d8407004cf1d7acf34192",
+  "ReportID": "01a21465-196b-7004-b711-6a763eb4d0c5",
+  "CreatedAt": "2026-11-25T20:28:19.691004363Z",
+  "ArtifactID": "sha256:6607c537b2d67280aa8b32d8f7fb6500cebd2afaf20011ceb06421b85a914aa8",
   "ArtifactName": "docqa:scan",
   "ArtifactType": "container_image",
   "Metadata": {
-    "Size": 84241408,
+    "Size": 84242432,
     "OS": {
       "Family": "wolfi",
       "Name": "20230201"
     },
-    "ImageID": "sha256:a0c4abf56259fea3096da7741b518750c142803a72fd844a19a165b474b6c9f9",
+    "ImageID": "sha256:0fa7980942c378e12be77e108abaffb9c22a7d9a5cfca5f4ec10e0a8ae27bba9",
     "DiffIDs": [
       "sha256:618626dbcf9e42e3b640302f216c592ad0032a0429d03a07711ff0725f06b429",
       "sha256:81ac36f4bee4102128a3f1f63d1a2a057922351d656f4a4fcdb1b92cd28a95f2",
@@ -29,20 +29,20 @@
       "sha256:c0c06e822db72336ef5db520db61836b48437aaca0cdf8695845c31fcb074ecb",
       "sha256:9698fb75a71f0303972a7214e50f4d14fa43e1583ec5db0e2d4f2816b9b7c8d9",
       "sha256:3001f8b874a305f54713d510418a6562a4cc0686c5bbd0627839d1520f2fab2a",
-      "sha256:d838d6e1340aea1bf5ecb3b53fa626a6ec69375f8e72255eb7647a1f152231a7",
-      "sha256:0dd3c474f3ae75afcaf5bf20c8fad914905d3dfe44dc614e89b642aa56638f5b"
+      "sha256:7b5df5b186044ad40d404d8a545d0e0cc916927596ebea9c168f13623a039df8",
+      "sha256:c252c02487fa6d9f4a93636b2cb619228cdc77a457455bfa0618f524ec5bc01f"
     ],
     "RepoTags": [
       "docqa:scan"
     ],
     "RepoDigests": [
-      "docqa@sha256:a0c4abf56259fea3096da7741b518750c142803a72fd844a19a165b474b6c9f9"
+      "docqa@sha256:0fa7980942c378e12be77e108abaffb9c22a7d9a5cfca5f4ec10e0a8ae27bba9"
     ],
     "Reference": "docqa:scan",
     "ImageConfig": {
       "architecture": "amd64",
       "author": "github.com/chainguard-dev/apko",
-      "created": "2026-11-25T17:26:13.248130257Z",
+      "created": "2026-11-25T20:27:47.945758744Z",
       "history": [
         {
           "created": "2026-11-25T00:27:10Z",
@@ -110,41 +110,41 @@
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "COPY src/ /app/src/ # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "COPY data/ /app/data/ # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "ENV PYTHONPATH=/app/deps:/app/src PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 DOCQA_DATA_DIR=/app/data",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "USER 65532:65532",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "EXPOSE 8000/tcp",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "HEALTHCHECK {Test:[CMD python -c import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4).status == 200 else 1)] Interval:30s Timeout:5s StartPeriod:10s StartInterval:0s Retries:3}",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-25T17:26:13Z",
+          "created": "2026-11-25T20:27:47Z",
           "created_by": "ENTRYPOINT [\"python\" \"-m\" \"uvicorn\" \"docqa.api:app_from_env\" \"--factory\" \"--host\" \"0.0.0.0\" \"--port\" \"8000\" \"--no-server-header\" \"--proxy-headers\" \"--forwarded-allow-ips\" \"127.0.0.1\"]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -167,8 +167,8 @@
           "sha256:c0c06e822db72336ef5db520db61836b48437aaca0cdf8695845c31fcb074ecb",
           "sha256:9698fb75a71f0303972a7214e50f4d14fa43e1583ec5db0e2d4f2816b9b7c8d9",
           "sha256:3001f8b874a305f54713d510418a6562a4cc0686c5bbd0627839d1520f2fab2a",
-          "sha256:d838d6e1340aea1bf5ecb3b53fa626a6ec69375f8e72255eb7647a1f152231a7",
-          "sha256:0dd3c474f3ae75afcaf5bf20c8fad914905d3dfe44dc614e89b642aa56638f5b"
+          "sha256:7b5df5b186044ad40d404d8a545d0e0cc916927596ebea9c168f13623a039df8",
+          "sha256:c252c02487fa6d9f4a93636b2cb619228cdc77a457455bfa0618f524ec5bc01f"
         ]
       },
       "config": {
@@ -291,14 +291,14 @@
         "DiffID": "sha256:3001f8b874a305f54713d510418a6562a4cc0686c5bbd0627839d1520f2fab2a"
       },
       {
-        "Size": 40960,
-        "Digest": "sha256:5803a048f0163461ebde48d564cbd3e321b442c0e02f49b67bc51cdde2523f93",
-        "DiffID": "sha256:d838d6e1340aea1bf5ecb3b53fa626a6ec69375f8e72255eb7647a1f152231a7"
+        "Size": 41984,
+        "Digest": "sha256:de164348b2fa3b85067f26a33efa8ed51dbecc25c220bbf499a0b2239a2b3fcd",
+        "DiffID": "sha256:7b5df5b186044ad40d404d8a545d0e0cc916927596ebea9c168f13623a039df8"
       },
       {
         "Size": 10752,
-        "Digest": "sha256:0d8ab042791ed66ce1d998a71a1b686c9b711a17ada8e75f02ac261408a12d23",
-        "DiffID": "sha256:0dd3c474f3ae75afcaf5bf20c8fad914905d3dfe44dc614e89b642aa56638f5b"
+        "Digest": "sha256:f2c1ea12496dc6c68929c7c88e9c8058e86e7874074406f0e37335b02234dcd6",
+        "DiffID": "sha256:c252c02487fa6d9f4a93636b2cb619228cdc77a457455bfa0618f524ec5bc01f"
       }
     ]
   },

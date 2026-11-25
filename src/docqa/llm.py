@@ -24,8 +24,6 @@ class LLM(Protocol):
     def complete(self, system: str, user: str, max_tokens: int) -> str: ...
 
 
-_DOC = re.compile(r'<document id="([^"]+)"[^>]*>\s*(.*?)\s*</document>', re.S)
-_QUESTION = re.compile(r"<question>\s*(.*?)\s*</question>", re.S)
 _ALLOWED = re.compile(r"ALLOWED_DOCUMENTS:\s*([^\n]*)")
 
 # Instruction-following behaviours of the mock, checked against its *whole* input.
@@ -48,9 +46,10 @@ class GullibleMockLLM:
     name = "mock-gullible-v1"
 
     def complete(self, system: str, user: str, max_tokens: int = 1024) -> str:
-        docs = _DOC.findall(user)
-        qm = _QUESTION.search(user)
-        question = qm.group(1) if qm else user
+        docs = _parse_documents(user)
+        question = _between(user, "<question>", "</question>")
+        if question is None:
+            question = user
         everything = system + "\n" + user
 
         if _REVEAL_SYSTEM.search(everything):
@@ -81,6 +80,31 @@ class GullibleMockLLM:
             return "I don't know based on the documents available to you."
         best.sort(key=lambda t: (-t[0], t[1]))
         return _cap(" ".join(f"{line} [{doc_id}]" for _, doc_id, line in best[:2]), max_tokens)
+
+
+# Prompt parsing uses str.find, not regexes: a lazy ".*?" between tags is polynomial-time on
+# crafted input (CodeQL py/polynomial-redos), and the question text is attacker-controlled.
+def _between(text: str, open_tag: str, close_tag: str, start: int = 0) -> str | None:
+    i = text.find(open_tag, start)
+    if i < 0:
+        return None
+    j = text.find(close_tag, i + len(open_tag))
+    return None if j < 0 else text[i + len(open_tag) : j].strip()
+
+
+def _parse_documents(text: str) -> list[tuple[str, str]]:
+    docs: list[tuple[str, str]] = []
+    pos = 0
+    while (start := text.find('<document id="', pos)) >= 0:
+        id_start = start + len('<document id="')
+        id_end = text.find('"', id_start)
+        tag_end = text.find(">", id_end) if id_end >= 0 else -1
+        close = text.find("</document>", tag_end) if tag_end >= 0 else -1
+        if close < 0:
+            break
+        docs.append((text[id_start:id_end], text[tag_end + 1 : close].strip()))
+        pos = close + len("</document>")
+    return docs
 
 
 def _cap(text: str, max_tokens: int) -> str:

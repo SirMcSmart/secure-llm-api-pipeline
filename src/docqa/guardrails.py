@@ -40,8 +40,11 @@ _SCRIPTISH = re.compile(
 _ANY_TAG = re.compile(r"<[^>]{1,200}>")
 # Markdown images and links render as automatic requests in many chat UIs: a classic exfiltration
 # channel (the model puts the secret in the query string). Only relative links are kept.
-_MD_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
-_MD_LINK = re.compile(r"\[([^\]]*)\]\((?:https?:|//|data:)[^)]*\)", re.I)
+# Character classes exclude the opening bracket and quantifiers are bounded, so each match attempt
+# stops at the next "[": linear time on inputs like "![![![..." (CodeQL py/polynomial-redos).
+_MD_IMAGE = re.compile(r"!\[[^\[\]]{0,200}\]\([^()\s]{0,2048}\)")
+_MD_LINK = re.compile(r"\[([^\[\]]{0,200})\]\((?:https?:|//|data:)[^()\s]{0,2048}\)", re.I)
+MAX_OUTPUT_CHARS = 20_000
 _BARE_URL = re.compile(r"\bhttps?://\S+", re.I)
 SECRET_PATTERNS = [
     re.compile(p)
@@ -68,6 +71,7 @@ def new_canary() -> str:
 
 
 def check_output(text: str, *, canary: str, system_prompt: str, allowed_doc_ids: set[str]) -> OutputVerdict:
+    text = text[:MAX_OUTPUT_CHARS]  # bound the work every pattern below does
     verdict = OutputVerdict(text=text)
     # System prompt leakage: the per-request canary, or a long verbatim slice of the prompt.
     if canary in text or _shares_long_substring(text, system_prompt, 60):

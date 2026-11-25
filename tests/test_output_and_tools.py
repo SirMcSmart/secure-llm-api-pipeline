@@ -96,3 +96,19 @@ def test_calc_rejects_anything_but_arithmetic(expr):
 )
 def test_input_heuristics(text, flag):
     assert looks_like_injection(text) is flag
+
+
+@pytest.mark.parametrize(
+    "payload",
+    ["![" * 20000, "[](//" * 20000, '<document id="!"' * 20000, "<question>" + " " * 50000, "<script" * 20000],
+)
+def test_no_regex_denial_of_service(payload):
+    """Regression for CodeQL py/polynomial-redos: crafted input must be handled in linear time."""
+    import time
+
+    from docqa.llm import GullibleMockLLM
+
+    start = time.perf_counter()
+    check(payload)
+    GullibleMockLLM().complete("system", payload, 10)
+    assert time.perf_counter() - start < 1.0

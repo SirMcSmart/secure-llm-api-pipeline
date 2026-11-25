@@ -73,7 +73,7 @@ authorization boundary and output handling hold on their own:
 | hardened | 0 / 23 |
 <!-- REDTEAM:END -->
 
-Tests: 136 pytest cases pass ([`outputs/tests/pytest.txt`](outputs/tests/pytest.txt)), including
+Tests: 141 pytest cases pass ([`outputs/tests/pytest.txt`](outputs/tests/pytest.txt)), including
 11 that are working exploits against the baseline, so the "before" flaws are proven, not claimed.
 
 **What the numbers do and do not show** (read before quoting them):
@@ -99,7 +99,12 @@ Tests: 136 pytest cases pass ([`outputs/tests/pytest.txt`](outputs/tests/pytest.
   failed, so the runtime moved to Chainguard's Wolfi Python image (rebuilt daily, also shell-less
   and non-root): 0 known CVEs at scan time. That count will not stay at zero, which is why the
   workflow also runs weekly.
-- CodeQL runs in GitHub Actions only; it is not in the local numbers above.
+- CodeQL runs in GitHub Actions only, so it is not in the table above. On its first run it
+  failed the build with 4 high-severity (7.5) polynomial ReDoS findings that Semgrep, Bandit and
+  ZAP had all passed: regexes in the output filter and in the prompt parser that a crafted input
+  such as `"![" * 20000` could drive into quadratic time (a denial-of-service risk, OWASP LLM10).
+  They were fixed with bounded, non-overlapping character classes and plain string scanning, and
+  `test_no_regex_denial_of_service` now guards against regressions.
 
 ## What is in the repo
 
@@ -114,7 +119,7 @@ src/docqa/            hardened service (FastAPI)
   auth.py, ratelimit.py SHA-256 hashed bearer keys, constant-time compare; per-user token bucket
   llm.py                GullibleMockLLM (default) and an optional Anthropic backend
 vulnerable/           the "before" app, image and Terraform, 14 planted flaws (see its README)
-tests/                136 tests; attacks/prompt_injection.json is the red-team corpus
+tests/                141 tests; attacks/prompt_injection.json is the red-team corpus
 docs/threat_model.md  DFD, STRIDE per trust boundary, OWASP LLM Top 10 + MITRE ATLAS mapping
 infra/terraform/      AWS: ECS Fargate in private subnets, ALB + WAF, KMS, VPC endpoints, IAM
 .semgrep/             custom Semgrep rules for LLM-specific flaws
@@ -202,7 +207,7 @@ Requires Python 3.11 and Docker. No API keys or cloud credentials are needed.
 
 ```bash
 make venv        # app + test dependencies (runtime deps installed with --require-hashes)
-make test        # 136 tests
+make test        # 141 tests
 make redteam     # writes outputs/redteam/
 make keys        # random API keys: .dev-keys (yours) and .env (hashes for the server)
 make serve       # http://127.0.0.1:8000
