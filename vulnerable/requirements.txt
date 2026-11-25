@@ -1,6 +1,6 @@
 # As-found dependency pins of the baseline (outdated on purpose, for the SCA before/after).
 fastapi==0.65.2
-starlette==0.14.2
+starlette==1.10.0
 pydantic==1.8.2
 uvicorn==0.13.4
 jinja2==2.11.3
