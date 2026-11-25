@@ -4,4 +4,4 @@ starlette==0.14.2
 pydantic==1.8.2
 uvicorn==0.13.4
 jinja2==2.11.3
-markupsafe==2.0.1
+markupsafe==3.0.4
