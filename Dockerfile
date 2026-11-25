@@ -4,13 +4,13 @@
 # by digest and must use the same Python version. Dependabot (docker) proposes digest updates.
 # Run with: --read-only --cap-drop ALL --security-opt no-new-privileges (see Makefile / compose).
 
-FROM cgr.dev/chainguard/python:latest-dev@sha256:768ee36ee9f4b8c882634c07d0b889425bc8e100886a3f742b83b1c647cc2d4b AS build
+FROM cgr.dev/chainguard/python:latest-dev@sha256:42c7616876638d3fc9f6663aeb159a346ebe494aced2c7c2c1bb990245ba45b8 AS build
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 WORKDIR /build
 COPY requirements.txt .
 RUN pip install --no-compile --require-hashes --no-deps --only-binary=:all: --target /build/deps -r requirements.txt
 
-FROM cgr.dev/chainguard/python:latest@sha256:f522a16f34c8aa60f831e6476e396ef3951830a1b9059d19bc531a544d0f1579
+FROM cgr.dev/chainguard/python:latest@sha256:8ee621c22371d08cc07f734704837da58b48b12fe52815fd81e1f426c082fb6c
 WORKDIR /app
 COPY --from=build /build/deps /app/deps
 COPY src/ /app/src/
