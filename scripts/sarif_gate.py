@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -26,7 +27,11 @@ def main() -> int:
                 sev = float(rules.get(res.get("ruleId"), {}).get("properties", {}).get("security-severity", 0) or 0)
                 if sev >= args.min:
                     loc = res["locations"][0]["physicalLocation"]
-                    blocking.append(f"{sev:4.1f} {res['ruleId']} {loc['artifactLocation']['uri']}:{loc['region']['startLine']}")
+                    uri, line = loc["artifactLocation"]["uri"], loc["region"]["startLine"]
+                    msg = res.get("message", {}).get("text", "").replace("\n", " ")[:300]
+                    blocking.append(f"{sev:4.1f} {res['ruleId']} {uri}:{line} {msg}")
+                    if os.environ.get("GITHUB_ACTIONS"):  # show it on the PR diff / run summary
+                        print(f"::error file={uri},line={line},title={res['ruleId']} ({sev})::{msg}")
     print("\n".join(blocking) or f"no results with security-severity >= {args.min}")
     return 1 if blocking else 0
 

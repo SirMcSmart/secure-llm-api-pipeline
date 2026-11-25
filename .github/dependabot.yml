@@ -2,6 +2,9 @@ version: 2
 updates:
   - package-ecosystem: pip
     directory: /
+    # vulnerable/ is the intentionally outdated "before" baseline; keep its pins as they are.
+    exclude-paths:
+      - "vulnerable/**"
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
@@ -10,6 +13,8 @@ updates:
       interval: weekly
   - package-ecosystem: docker
     directory: /
+    exclude-paths:
+      - "vulnerable/**"
     schedule:
       interval: weekly
   - package-ecosystem: terraform
