@@ -10,8 +10,8 @@
 | Container | Checkov (Dockerfile) | 2 failed, 28 passed | 0 failed, 36 passed |
 | Container | hadolint | 0 error, 1 warning, 0 info | 0 error, 0 warning, 0 info |
 | CI/CD | Checkov (GitHub Actions workflow) | not run | 0 failed, 164 passed |
-| DAST | OWASP ZAP baseline (passive) | not run | not run |
-| DAST | OWASP ZAP API scan (active, OpenAPI) | not run | not run |
+| DAST | OWASP ZAP baseline (passive) | 0 high, 0 medium, 2 low, 1 informational | 0 high, 0 medium, 0 low, 1 informational |
+| DAST | OWASP ZAP API scan (active, OpenAPI) | 1 high, 2 medium, 8 low, 2 informational | 0 high, 0 medium, 0 low, 2 informational |
 | LLM red team | Prompt-injection / jailbreak corpus | 23 of 23 attacks succeeded | 0 of 23 attacks succeeded |
 
-**Security gate (hardened): FAILED**: missing report: zap_api; missing report: zap_baseline
+**Security gate (hardened): PASSED**

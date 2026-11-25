@@ -50,8 +50,35 @@
       "errors": 0,
       "warnings": 0
     },
-    "zap_baseline": null,
-    "zap_api": null
+    "zap_baseline": {
+      "high": 0,
+      "medium": 0,
+      "low": 2,
+      "informational": 1,
+      "alerts": [
+        "Low: Cross-Origin-Resource-Policy Header Missing or Invalid",
+        "Low: X-Content-Type-Options Header Missing"
+      ]
+    },
+    "zap_api": {
+      "high": 1,
+      "medium": 2,
+      "low": 8,
+      "informational": 2,
+      "alerts": [
+        "High: SQL Injection",
+        "Low: A Server Error response code was returned by the server",
+        "Low: Application Error Disclosure",
+        "Low: Cross-Origin-Embedder-Policy Header Missing or Invalid",
+        "Low: Cross-Origin-Opener-Policy Header Missing or Invalid",
+        "Low: Cross-Origin-Resource-Policy Header Missing or Invalid",
+        "Low: Permissions Policy Header Not Set",
+        "Low: Unexpected Content-Type was returned",
+        "Low: X-Content-Type-Options Header Missing",
+        "Medium: Content Security Policy (CSP) Header Not Set",
+        "Medium: Missing Anti-clickjacking Header"
+      ]
+    }
   },
   "hardened": {
     "semgrep": {
@@ -108,8 +135,20 @@
       "errors": 0,
       "warnings": 0
     },
-    "zap_baseline": null,
-    "zap_api": null
+    "zap_baseline": {
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "informational": 1,
+      "alerts": []
+    },
+    "zap_api": {
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "informational": 2,
+      "alerts": []
+    }
   },
   "redteam": {
     "vulnerable": {
@@ -252,10 +291,7 @@
     }
   },
   "gate": {
-    "passed": false,
-    "failures": [
-      "missing report: zap_api",
-      "missing report: zap_baseline"
-    ]
+    "passed": true,
+    "failures": []
   }
 }

@@ -27,11 +27,11 @@ even when the model does exactly what the attacker says.
 | Container | Checkov (Dockerfile) | 2 failed, 28 passed | 0 failed, 36 passed |
 | Container | hadolint | 0 error, 1 warning, 0 info | 0 error, 0 warning, 0 info |
 | CI/CD | Checkov (GitHub Actions workflow) | not run | 0 failed, 164 passed |
-| DAST | OWASP ZAP baseline (passive) | not run | not run |
-| DAST | OWASP ZAP API scan (active, OpenAPI) | not run | not run |
+| DAST | OWASP ZAP baseline (passive) | 0 high, 0 medium, 2 low, 1 informational | 0 high, 0 medium, 0 low, 1 informational |
+| DAST | OWASP ZAP API scan (active, OpenAPI) | 1 high, 2 medium, 8 low, 2 informational | 0 high, 0 medium, 0 low, 2 informational |
 | LLM red team | Prompt-injection / jailbreak corpus | 23 of 23 attacks succeeded | 0 of 23 attacks succeeded |
 
-**Security gate (hardened): FAILED**: missing report: zap_api; missing report: zap_baseline
+**Security gate (hardened): PASSED**
 <!-- SCANS:END -->
 
 Prompt-injection / jailbreak corpus (23 attacks plus one benign control, mapped to OWASP LLM and
@@ -86,8 +86,8 @@ Tests: 136 pytest cases pass ([`outputs/tests/pytest.txt`](outputs/tests/pytest.
 - The regex input filter is a speed bump, not a wall. Four attacks are written to bypass it and
   do; they fail later in the chain.
 - No single scanner found everything. The IDOR (VULN-02) was found only by tests, because no SAST
-  tool knows who is allowed to read which document. Semgrep missed the SQL injection that Bandit
-  and the tests caught. gitleaks found one of the two hard-coded secrets. That is why the pipeline
+  tool knows who is allowed to read which document. Semgrep missed the SQL injection that Bandit,
+  ZAP's active scan and the tests caught. gitleaks found one of the two hard-coded secrets. That is why the pipeline
   layers SAST, SCA, secrets, IaC, DAST and tests instead of trusting one tool.
 - The baseline's Trivy count is an *under*-count. Its base image is Debian 10, which is past end
   of life, and Trivy flags it EOSL: advisories stop being published for it, so newer CVEs never

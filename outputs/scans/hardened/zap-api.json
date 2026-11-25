@@ -1,0 +1,369 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.17.0",
+	"@generated": "Wed, 25 Nov 2026 18:16:26",
+	"created": "2026-11-25T18:16:26.142371619Z",
+	"insights":[
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://docqa-dast-app:8000",
+			"key": "insight.code.2xx",
+			"description": "Percentage of responses with status code 2xx",
+			"statistic": "76"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://docqa-dast-app:8000",
+			"key": "insight.code.4xx",
+			"description": "Percentage of responses with status code 4xx",
+			"statistic": "23"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://docqa-dast-app:8000",
+			"key": "insight.endpoint.ctype.application/json",
+			"description": "Percentage of endpoints with content type application/json",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://docqa-dast-app:8000",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "63"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://docqa-dast-app:8000",
+			"key": "insight.endpoint.method.POST",
+			"description": "Percentage of endpoints with method POST",
+			"statistic": "36"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://docqa-dast-app:8000",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "22"
+		}
+	],
+	"site":[ 
+		{
+			"@name": "http://docqa-dast-app:8000",
+			"@host": "docqa-dast-app",
+			"@port": "8000",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "100000",
+					"alertRef": "100000-1",
+					"alert": "A Client Error response code was returned by the server",
+					"name": "A Client Error response code was returned by the server",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>A response code of 404 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
+					"instances":[ 
+						{
+							"id": "4",
+							"uri": "http://docqa-dast-app:8000",
+							"nodeName": "http:\/\/docqa-dast-app:8000",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "46",
+							"uri": "http://docqa-dast-app:8000/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1",
+							"uri": "http://docqa-dast-app:8000/1161620523269737917",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/1161620523269737917",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "5",
+							"uri": "http://docqa-dast-app:8000/v1",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "48",
+							"uri": "http://docqa-dast-app:8000/v1/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "http://docqa-dast-app:8000/v1/537719219719614503",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/537719219719614503",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "67",
+							"uri": "http://docqa-dast-app:8000/v1/actuator/health",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/actuator\/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "3",
+							"uri": "http://docqa-dast-app:8000/v1/documents/498789621359623994",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/documents\/498789621359623994",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "0",
+							"uri": "http://docqa-dast-app:8000/v1/documents/doc_id",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/documents\/doc_id",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						},
+						{
+							"id": "52",
+							"uri": "http://docqa-dast-app:8000/v1/documents/doc_id/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/documents\/doc_id\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						},
+						{
+							"id": "49",
+							"uri": "http://docqa-dast-app:8000/v1/search",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/search",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						},
+						{
+							"id": "42",
+							"uri": "http://docqa-dast-app:8000/v1/search?q=%23set%28%24engine%3D%22%22%29%0A%23set%28%24proc%3D%24engine.getClass%28%29.forName%28%22java.lang.Runtime%22%29.getRuntime%28%29.exec%28%22sleep+15%22%29%29%0A%23set%28%24null%3D%24proc.waitFor%28%29%29%0A%24%7Bnull%7D",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/search (q)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						},
+						{
+							"id": "51",
+							"uri": "http://docqa-dast-app:8000/v1/search/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/search\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						},
+						{
+							"id": "23",
+							"uri": "http://docqa-dast-app:8000/computeMetadata/v1/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/computeMetadata\/v1\/ ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "20",
+							"uri": "http://docqa-dast-app:8000/latest/meta-data/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/latest\/meta-data\/ ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "37",
+							"uri": "http://docqa-dast-app:8000/metadata/instance",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/metadata\/instance ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "38",
+							"uri": "http://docqa-dast-app:8000/metadata/v1",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/metadata\/v1 ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "26",
+							"uri": "http://docqa-dast-app:8000/opc/v1/instance/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/opc\/v1\/instance\/ ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "29",
+							"uri": "http://docqa-dast-app:8000/opc/v2/instance/",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/opc\/v2\/instance\/ ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "39",
+							"uri": "http://docqa-dast-app:8000/openstack/latest/meta_data.json",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/openstack\/latest\/meta_data.json ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "54",
+							"uri": "http://docqa-dast-app:8000/v1/ask",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/ask ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						}
+					],
+					"count": "21",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "388",
+					"wascid": "20",
+					"sourceid": "15"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-1",
+					"alert": "Non-Storable Content",
+					"name": "Non-Storable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+					"instances":[ 
+						{
+							"id": "33",
+							"uri": "http://docqa-dast-app:8000/health",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "31",
+							"uri": "http://docqa-dast-app:8000/v1/documents",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/documents",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "30",
+							"uri": "http://docqa-dast-app:8000/v1/documents/doc_id",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/documents\/doc_id",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "32",
+							"uri": "http://docqa-dast-app:8000/v1/search?q=q",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/search (q)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "28",
+							"uri": "http://docqa-dast-app:8000/v1/ask",
+							"nodeName": "http:\/\/docqa-dast-app:8000\/v1\/ask ()({question})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": false,
+					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "1"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}
